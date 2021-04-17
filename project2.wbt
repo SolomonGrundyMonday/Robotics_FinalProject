@@ -4,7 +4,7 @@ WorldInfo {
 }
 Viewpoint {
   orientation 0.26775982572658 -0.8249670120545708 -0.49772894706720133 3.989237182551404
-  position 140.89710343059704 274.1620047002338 -80.8751211952578
+  position 107.30999970364596 154.32925509416748 -16.448570523380464
 }
 TexturedBackground {
 }
@@ -657,6 +657,24 @@ Solid {
   boundingObject Box {
     size 0.1 0.1 0.1
   }
+}
+Mantis {
+  translation 42.7839 1 43.0297
+  controller "Mapper"
+  supervisor TRUE
+  extensionSlot [
+    HokuyoUrg04lxug01 {
+      rotation 1 0 0 -1.57
+    }
+    Display {
+      width 360
+      height 360
+    }
+    Compass {
+    }
+    GPS {
+    }
+  ]
 }
 Solid {
   translation -16.1598 1.53122e-12 -2.89462
