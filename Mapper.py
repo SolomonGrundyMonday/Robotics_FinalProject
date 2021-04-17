@@ -8,9 +8,15 @@ from controller import Robot, Motor, DistanceSensor
 import math
 import numpy as np
 
+# Global constants for mapping code
 ANGLE_BINS = 667
 MAX_LIDAR_ANGLE = math.radians(240)
 LIDAR_SENSOR_MAX_RANGE = 5.5
+MAP_HEIGHT = 400
+MAP_WIDTH = 400
+DAMAGE_THRESHOLD = .54
+INCREMENT_CMAP = 0.0005
+NOISE_THRESHOLD = 1.0
 
 # create the Robot instance.
 robot = Robot()
@@ -45,7 +51,7 @@ display = robot.getDevice('display')
 lidarReadings = []
 lidarOffsetAngles = np.linspace(-MAX_LIDAR_ANGLE/2, MAX_LIDAR_ANGLE/2, ANGLE_BINS)
     
-map = np.zeros(shape=(360,360))
+map = np.zeros(shape=(MAP_WIDTH, MAP_HEIGHT))
 frequency = 0.5
 
 # amplitude (radians)
@@ -78,45 +84,40 @@ while robot.step(timestep) != -1:
     pose_y = coord[2]
     pose_theta = -((math.atan2(n[0], n[2])) - (math.pi/2))
 
-    # Nove the legs using a sinosoidal function
+    # Nove the legs using a sinusoidal function
     for i in range(0, 18):  
         motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
       
     lidarReadings = lidar.getRangeImage()
-    #print(0.1594*ds.getValue()**(-.8533-0.2916))
     
     # Print the mapping data onto the display for debugging purposes.  Remove Display code/module for final demonstration
     for i, rho in enumerate(lidarReadings):
     
         # Compute rho and alpha from the sensor data
-        alpha = lidarOffsetAngles[i-1]
-        if rho > MAX_LIDAR_ANGLE:
-            rho = MAX_LIDAR_ANGLE
+        alpha = lidarOffsetAngles[i]
+        if rho > LIDAR_SENSOR_MAX_RANGE:
+            rho = LIDAR_SENSOR_MAX_RANGE
             
         # Compute the robot/world coordinates for sensor data
         rx = math.cos(alpha)*rho
         ry = -math.sin(alpha)*rho
-        wx =  (math.cos(pose_theta)*rx - math.sin(pose_theta)*ry) + pose_x
-        wy =  (-math.sin(pose_theta)*rx + math.cos(pose_theta)*ry) + pose_y
+        wx = (math.cos(pose_theta)*rx - math.sin(pose_theta)*ry) + pose_x
+        wy = (-math.sin(pose_theta)*rx + math.cos(pose_theta)*ry) + pose_y
 
         # Draw to the dispaly if the sensor output is within threshold
-        if rho <= 0.54:
-            (pixel_x, pixel_y) = (int(wx*4), 400-int(wy*4))
+        if rho > DAMAGE_THRESHOLD and alpha <= (math.pi/4) and alpha >= -(math.pi/4):
+            (pixel_x, pixel_y) = (int(wx*4), int(wy*4))
             
             # Ensure that the pixel to be drawn is within the bounds of the map
-            if(pixel_x >= 0 and pixel_x < 360 and pixel_y >= 0 and pixel_y < 360):
-                map[pixel_x][pixel_y] += 0.005
+            if(pixel_x >= 0 and pixel_x < MAP_WIDTH and pixel_y >= 0 and pixel_y < MAP_HEIGHT):
+                map[pixel_x][pixel_y] += INCREMENT_CMAP
                 
                 # Filter out sensor noise
-                if(map[pixel_x][pixel_y] >= 1.0):
-                    map[pixel_x][pixel_y] = 1.0
+                if(map[pixel_x][pixel_y] > NOISE_THRESHOLD):
+                    map[pixel_x][pixel_y] = NOISE_THRESHOLD
                     
                 # Print sensor data above threshold after filtering noise to the display
                 g = int(map[pixel_x][pixel_y]*255)
                 g = int((g*256**2+g*256+g))
                 display.setColor(g)
-                display.drawPixel(int(wx*4),400-int(wy*4))
-
-    # Draw red pixels on robot location for debug purposes
-    #display.setColor(int(0xFF0000))
-    #display.drawPixel(int(pose_y*4),int(pose_x*4))
+                display.drawPixel(pixel_y, pixel_x)
