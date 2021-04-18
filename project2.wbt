@@ -1,10 +1,11 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
   coordinateSystem "NUE"
+  gpsReference 50 0.8 50
 }
 Viewpoint {
-  orientation -0.052680302503667925 -0.996694071443743 -0.06185235385187181 1.8286800011873299
-  position 16.598795327357614 9.17123900198652 30.906254402946335
+  orientation 0.013498952422469651 -0.836018078741045 -0.5485358240822819 3.1938379183795877
+  position 46.53517915382934 54.52007913321812 25.132118364655675
 }
 TexturedBackground {
 }
@@ -659,7 +660,7 @@ Solid {
   }
 }
 Mantis {
-  translation 42.7839 1 43.0297
+  translation 42.5847 1 45.0965
   controller "Mapper"
   supervisor TRUE
   extensionSlot [

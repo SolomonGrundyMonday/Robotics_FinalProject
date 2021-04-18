@@ -84,6 +84,7 @@ while robot.step(timestep) != -1:
     pose_y = coord[2]
     pose_theta = -((math.atan2(n[0], n[2])) - (math.pi/2))
 
+    print('x: ', pose_x, 'y: ', coord[1], 'z: ', pose_y)
     # Nove the legs using a sinusoidal function
     for i in range(0, 18):  
         motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
@@ -102,11 +103,11 @@ while robot.step(timestep) != -1:
         rx = math.cos(alpha)*rho
         ry = -math.sin(alpha)*rho
         wx = (math.cos(pose_theta)*rx - math.sin(pose_theta)*ry) + pose_x
-        wy = (-math.sin(pose_theta)*rx + math.cos(pose_theta)*ry) + pose_y
+        wy = -(math.sin(pose_theta)*rx + math.cos(pose_theta)*ry) + pose_y
 
         # Draw to the dispaly if the sensor output is within threshold
         if rho > DAMAGE_THRESHOLD and alpha <= (math.pi/4) and alpha >= -(math.pi/4):
-            (pixel_x, pixel_y) = (int(wx*4), int(wy*4))
+            (pixel_x, pixel_y) = (400-int(wx*4), 400-int(wy*4))
             
             # Ensure that the pixel to be drawn is within the bounds of the map
             if(pixel_x >= 0 and pixel_x < MAP_WIDTH and pixel_y >= 0 and pixel_y < MAP_HEIGHT):
@@ -120,4 +121,7 @@ while robot.step(timestep) != -1:
                 g = int(map[pixel_x][pixel_y]*255)
                 g = int((g*256**2+g*256+g))
                 display.setColor(g)
-                display.drawPixel(pixel_y, pixel_x)
+                display.drawPixel(pixel_x, pixel_y)
+
+    display.setColor(0xFF0000)
+    display.drawPixel(400-int(pose_x*4), 400-int(pose_y*4))
