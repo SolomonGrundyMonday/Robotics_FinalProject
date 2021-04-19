@@ -14,7 +14,7 @@ MAX_LIDAR_ANGLE = math.radians(240)
 LIDAR_SENSOR_MAX_RANGE = 5.5
 MAP_HEIGHT = 400
 MAP_WIDTH = 400
-DAMAGE_THRESHOLD = .54
+DAMAGE_THRESHOLD = .74
 INCREMENT_CMAP = 0.0005
 NOISE_THRESHOLD = 1.0
 
@@ -93,34 +93,29 @@ while robot.step(timestep) != -1:
     # distance = 
     bearing_err = pose_theta - goal_theta
     print ("distance: ", distance)
-    print ("pose theta: ", pose_theta)
+    print ("pose theta: ", pose_theta, "goal theta: ", goal_theta)
     print ("bearing_err: ", bearing_err)
     # if distance < 5:# if we hit the wall, start make it turn
     
         
-    while abs(bearing_err) > 0.01 and distance < 5: #south
-        print ("entering and two values: ", bearing_err, distance)
-        pose_theta = -((math.atan2(n[0], n[2])) - (math.pi/2))
-        bearing_err = pose_theta - goal_theta
-        
-        if goal_theta == 0 and np.isclose(goal_theta, pose_theta, 0.000001):
-            goal_theta = math.pi
-        elif goal_theta == math.pi and np.isclose(goal_theta, pose_theta, 0.000001):
-            goal_theta = 0
-            
-        if goal_theta == 0:
-            for i in range(0, 9):#all the right legs
-                motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
-        else:
-            for i in range(9, 18):#all the left legs
-                motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
+    if abs(bearing_err) > 0.1 and pose_y < 5: #south        
+        goal_theta = math.pi     
+        for i in range(0, 9):#all the right legs
+            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
+        for i in range(9, 18):
+            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time - phaseVector[i]) + offsetVector[i])
+    elif abs(bearing_err) > 0.1 and pose_y > 95:
+    
+        goal_theta = 0
+        for i in range(0, 9):#all the right legs
+            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time - phaseVector[i]) + offsetVector[i])
+        for i in range(9, 18):#all the left legs
+            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
         
     # else:#facing north
         # for i in range(0, 9):#all the right legs
             # motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
-            
-    
-    
+               
     else:#go straight forward
         for i in range(0, 18):  
             motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
@@ -158,6 +153,3 @@ while robot.step(timestep) != -1:
                 display.setColor(g)
                 display.drawPixel(pixel_x, pixel_y)
                 
-        
-    display.setColor(0xFF0000)
-    display.drawPixel(400-int(pose_x*4), 400-int(pose_y*4))
