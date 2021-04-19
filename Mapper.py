@@ -30,7 +30,8 @@ motors = []
 for i in range(0, 18):
     motors.append(robot.getDevice(motorNames[i]))
     
-ds = robot.getDevice("Sharp's IR sensor GP2D120")
+# ds = robot.getDevice("Delphi ESR")
+ds = robot.getDevice("Sharp's IR sensor GP2Y0A710K0F")
 ds.enable(timestep)
   
 # Initialize lidar sensor  
@@ -71,7 +72,7 @@ baseOffset = 0.6
 shoulderOffset = 0.8   
 kneeOffset = -2.4  
 offsetVector = [-baseOffset, shoulderOffset, kneeOffset, 0.0, shoulderOffset, kneeOffset, baseOffset, shoulderOffset, kneeOffset, baseOffset, shoulderOffset, kneeOffset, 0.0, shoulderOffset, kneeOffset, -baseOffset, shoulderOffset, kneeOffset]
-
+goal_theta = 0
 
 # Main controller loop:
 while robot.step(timestep) != -1:
@@ -84,16 +85,50 @@ while robot.step(timestep) != -1:
     pose_y = coord[2]
     pose_theta = -((math.atan2(n[0], n[2])) - (math.pi/2))
 
-    print('x: ', pose_x, 'y: ', coord[1], 'z: ', pose_y)
+    # print('x: ', pose_x, 'y: ', coord[1], 'z: ', pose_y)
     # Nove the legs using a sinusoidal function
-    for i in range(0, 18):  
-        motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
+    # 1.962*x^(-0.5214)+0.4926 
+    # y[m] = f(x[V])  => y = 20.24*x^(-4.76)+0.6632
+    distance = 20.24*pow(ds.getValue(),-4.76) +0.6632 #0.1594 * pow(ds.getNumberOfTargets(), -0.8533) -0.02916
+    # distance = 
+    bearing_err = pose_theta - goal_theta
+    print ("distance: ", distance)
+    print ("pose theta: ", pose_theta)
+    print ("bearing_err: ", bearing_err)
+    # if distance < 5:# if we hit the wall, start make it turn
+    
+        
+    while abs(bearing_err) > 0.01 and distance < 5: #south
+        print ("entering and two values: ", bearing_err, distance)
+        pose_theta = -((math.atan2(n[0], n[2])) - (math.pi/2))
+        bearing_err = pose_theta - goal_theta
+        
+        if goal_theta == 0 and np.isclose(goal_theta, pose_theta, 0.000001):
+            goal_theta = math.pi
+        elif goal_theta == math.pi and np.isclose(goal_theta, pose_theta, 0.000001):
+            goal_theta = 0
+            
+        if goal_theta == 0:
+            for i in range(0, 9):#all the right legs
+                motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
+        else:
+            for i in range(9, 18):#all the left legs
+                motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
+        
+    # else:#facing north
+        # for i in range(0, 9):#all the right legs
+            # motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
+            
+    
+    
+    else:#go straight forward
+        for i in range(0, 18):  
+            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
       
     lidarReadings = lidar.getRangeImage()
     
     # Print the mapping data onto the display for debugging purposes.  Remove Display code/module for final demonstration
     for i, rho in enumerate(lidarReadings):
-    
         # Compute rho and alpha from the sensor data
         alpha = lidarOffsetAngles[i]
         if rho > LIDAR_SENSOR_MAX_RANGE:
@@ -105,7 +140,7 @@ while robot.step(timestep) != -1:
         wx = (math.cos(pose_theta)*rx - math.sin(pose_theta)*ry) + pose_x
         wy = -(math.sin(pose_theta)*rx + math.cos(pose_theta)*ry) + pose_y
 
-        # Draw to the dispaly if the sensor output is within threshold
+        # Draw to the display if the sensor output is within threshold
         if rho > DAMAGE_THRESHOLD and alpha <= (math.pi/4) and alpha >= -(math.pi/4):
             (pixel_x, pixel_y) = (400-int(wx*4), 400-int(wy*4))
             
@@ -122,6 +157,7 @@ while robot.step(timestep) != -1:
                 g = int((g*256**2+g*256+g))
                 display.setColor(g)
                 display.drawPixel(pixel_x, pixel_y)
-
+                
+        
     display.setColor(0xFF0000)
     display.drawPixel(400-int(pose_x*4), 400-int(pose_y*4))
