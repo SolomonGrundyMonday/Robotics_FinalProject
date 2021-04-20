@@ -4,8 +4,8 @@ WorldInfo {
   gpsReference 50 0.8 50
 }
 Viewpoint {
-  orientation -0.9752853020094605 -0.2077696616037638 -0.07516879273589924 0.7841990201854199
-  position 31.870680875279795 19.950974274763816 0.5030172233904651
+  orientation -0.9871245414010098 0.1340981532155293 0.08719418024174752 1.0908692934236042
+  position 39.7516313494983 47.462255079183805 69.74141214862122
 }
 TexturedBackground {
 }
@@ -504,7 +504,6 @@ Solid {
   boundingObject Box {
     size 20 2 0.09
   }
-  radarCrossSection 1
 }
 Solid {
   translation -49.4026 4.26326e-14 0.061147
@@ -524,26 +523,6 @@ Solid {
   name "solid(19)"
   boundingObject Box {
     size 20 2 0.09
-  }
-}
-Solid {
-  translation -4.88284 2.84217e-14 3.68734
-  rotation 0 1 0 1.5708
-  scale 5 5 5
-  children [
-    Shape {
-      appearance PBRAppearance {
-        baseColor 0.5 1 1
-        roughness 1
-      }
-      geometry Box {
-        size 1.5 0.3 0.09
-      }
-    }
-  ]
-  name "solid(20)"
-  boundingObject Box {
-    size 1.5 0.3 0.09
   }
 }
 Solid {
@@ -661,17 +640,14 @@ Solid {
   }
 }
 Mantis {
-  hidden rotation_27 0 0 -0.9999999999999999 2.299969999912009
-  hidden rotation_36 0 0 -0.9999999999999999 2.2999799999564186
-  hidden rotation_45 0 0 -0.9999999999999999 2.299969999912009
-  translation 36.1752 1.11215 -13.2929
-  controller "Mapper2"
+  hidden rotation_17 0 0 -0.9999999999999999 2.2999699999342136
+  hidden rotation_26 0 0 -0.9999999999999999 2.2999699999342136
+  hidden rotation_44 0 0 -0.9999999999999999 2.2999699999342136
+  hidden rotation_53 0 0 -0.9999999999999999 2.2999699999342136
+  translation 42.5847 1 45.0965
+  controller "Mapper"
   supervisor TRUE
   extensionSlot [
-    SharpGP2Y0A710K0F {
-      translation 0 0 -1.25
-      rotation 0 1 0 1.57
-    }
     HokuyoUrg04lxug01 {
       translation 0 -0.1 0
       rotation 1 0 0 -1.57

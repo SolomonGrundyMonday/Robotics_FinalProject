@@ -4,9 +4,10 @@
 #  3) Added code to dray map data onto the display attached to the Mantis' extension slot
 
 
-from controller import Robot, Motor, DistanceSensor
+from controller import Robot, Motor, DistanceSensor, Supervisor
 import math
 import numpy as np
+from matplotlib import pyplot as plt
 
 # Global constants for mapping code
 ANGLE_BINS = 667
@@ -17,9 +18,11 @@ MAP_WIDTH = 400
 DAMAGE_THRESHOLD = .74
 INCREMENT_CMAP = 0.0005
 NOISE_THRESHOLD = 1.0
+FORTY_FIVE_DEGREES = math.pi/4
+NINETY_DEGREES = math.pi/2
 
 # create the Robot instance.
-robot = Robot()
+robot = Supervisor()
 
 # get the time step of the current world.
 timestep = int(robot.getBasicTimeStep())
@@ -29,10 +32,6 @@ motorNames = ['RPC', 'RPF', 'RPT', 'RMC', 'RMF', 'RMT', 'RAC', 'RAF', 'RAT', 'LP
 motors = []
 for i in range(0, 18):
     motors.append(robot.getDevice(motorNames[i]))
-    
-# ds = robot.getDevice("Delphi ESR")
-ds = robot.getDevice("Sharp's IR sensor GP2Y0A710K0F")
-ds.enable(timestep)
   
 # Initialize lidar sensor  
 lidar = robot.getDevice('Hokuyo URG-04LX-UG01')
@@ -72,7 +71,8 @@ baseOffset = 0.6
 shoulderOffset = 0.8   
 kneeOffset = -2.4  
 offsetVector = [-baseOffset, shoulderOffset, kneeOffset, 0.0, shoulderOffset, kneeOffset, baseOffset, shoulderOffset, kneeOffset, baseOffset, shoulderOffset, kneeOffset, 0.0, shoulderOffset, kneeOffset, -baseOffset, shoulderOffset, kneeOffset]
-goal_theta = 0
+goal_theta = math.pi
+
 
 # Main controller loop:
 while robot.step(timestep) != -1:
@@ -83,40 +83,28 @@ while robot.step(timestep) != -1:
     n = compass.getValues()
     pose_x = coord[0]
     pose_y = coord[2]
-    pose_theta = -((math.atan2(n[0], n[2])) - (math.pi/2))
-
-    # print('x: ', pose_x, 'y: ', coord[1], 'z: ', pose_y)
-    # Nove the legs using a sinusoidal function
-    # 1.962*x^(-0.5214)+0.4926 
-    # y[m] = f(x[V])  => y = 20.24*x^(-4.76)+0.6632
-    distance = 20.24*pow(ds.getValue(),-4.76) +0.6632 #0.1594 * pow(ds.getNumberOfTargets(), -0.8533) -0.02916
-    # distance = 
+    pose_theta = -((math.atan2(n[0], n[2])) - (NINETY_DEGREES))
     bearing_err = pose_theta - goal_theta
-    print ("distance: ", distance)
-    print ("pose theta: ", pose_theta, "goal theta: ", goal_theta)
-    print ("bearing_err: ", bearing_err)
-    # if distance < 5:# if we hit the wall, start make it turn
     
-        
-    if abs(bearing_err) > 0.1 and pose_y < 5: #south        
-        goal_theta = math.pi     
+    
+    #print("bearing error: ", bearing_err, "goal theta: ", goal_theta)
+    #print("(x, y): (", pose_x, ", ", pose_y, ")")   
+    if abs(bearing_err) > 0.1 and pose_y < 7 and goal_theta != 0: #south           
         for i in range(0, 9):#all the right legs
             motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
         for i in range(9, 18):
-            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time - phaseVector[i]) + offsetVector[i])
-    elif abs(bearing_err) > 0.1 and pose_y > 95:
-    
-        goal_theta = 0
+            motors[i].setPosition(ampVector[i] * math.sin(1.5 * math.pi * frequency * time - phaseVector[i]) + offsetVector[i])
+    elif abs(bearing_err) > 0.1 and pose_y > 93 and goal_theta != math.pi:    
         for i in range(0, 9):#all the right legs
-            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time - phaseVector[i]) + offsetVector[i])
+            motors[i].setPosition(ampVector[i] * math.sin(0.8 * math.pi * frequency * time - phaseVector[i]) + offsetVector[i])
         for i in range(9, 18):#all the left legs
-            motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
-        
-    # else:#facing north
-        # for i in range(0, 9):#all the right legs
-            # motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
-               
+            motors[i].setPosition(ampVector[i] * math.sin(2.5 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])        
     else:#go straight forward
+    
+        if pose_y < 7:
+            goal_theta = 0
+        elif pose_y > 93:
+            goal_theta = math.pi
         for i in range(0, 18):  
             motors[i].setPosition(ampVector[i] * math.sin(2.0 * math.pi * frequency * time + phaseVector[i]) + offsetVector[i])
       
@@ -136,7 +124,7 @@ while robot.step(timestep) != -1:
         wy = -(math.sin(pose_theta)*rx + math.cos(pose_theta)*ry) + pose_y
 
         # Draw to the display if the sensor output is within threshold
-        if rho > DAMAGE_THRESHOLD and alpha <= (math.pi/4) and alpha >= -(math.pi/4):
+        if rho > DAMAGE_THRESHOLD and alpha <= (FORTY_FIVE_DEGREES) and alpha >= -(FORTY_FIVE_DEGREES):
             (pixel_x, pixel_y) = (400-int(wx*4), 400-int(wy*4))
             
             # Ensure that the pixel to be drawn is within the bounds of the map
@@ -152,4 +140,13 @@ while robot.step(timestep) != -1:
                 g = int((g*256**2+g*256+g))
                 display.setColor(g)
                 display.drawPixel(pixel_x, pixel_y)
+                
+    if np.isclose(pose_x, 5, 0.4) and np.isclose(pose_y, 5, 0.4):
+         robot.simulationSetMode(Supervisor.SIMULATION_MODE_PAUSE)
+         np.save('map', map)
+         # Do stuff here to compute the c-spoce map and spawn in the manipulator arm
+         # and repair equipment to the appropriate locations
+         plt.imshow(map, cmap='gray')
+         plt.show()
+         robot.simulationSetMode(Supervisor.SIMULATION_MODE_REAL_TIME)
                 
