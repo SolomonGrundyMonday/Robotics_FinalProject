@@ -1,0 +1,532 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+  gpsReference 50 0.8 50
+}
+Viewpoint {
+  orientation 0.5489831715456353 0.6516058199122237 0.5234762008116646 4.328940403308889
+  position -51.27290691738209 315.02982023925136 -10.7437639897556
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.236598 0 0.0330696
+  floorSize 100 100
+  wallThickness 0.001
+  wallHeight 1e-05
+}
+Solid {
+  translation -39.1006 1.53122e-12 -2.81167
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.1 0.1 0.8
+      }
+    }
+  ]
+  name "solid(43)"
+  boundingObject Box {
+    size 4.1 0.1 0.8
+  }
+}
+Solid {
+  translation 48.4781 8.23874e-12 43.7665
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 0.8 0.1 2.3
+      }
+    }
+  ]
+  name "solid(39)"
+  boundingObject Box {
+    size 2 0.1 3.2
+  }
+}
+Solid {
+  translation 44.9376 1.53122e-12 -42.0255
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 2 0.1 3.2
+      }
+    }
+  ]
+  name "solid(23)"
+  boundingObject Box {
+    size 2 0.1 3.2
+  }
+}
+Solid {
+  translation 45.7815 1.53122e-12 -25.4644
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 1.7 0.1 3.4
+      }
+    }
+  ]
+  name "solid(40)"
+  boundingObject Box {
+    size 1.7 0.1 3.2
+  }
+}
+Solid {
+  translation 38.908 1.53122e-12 -8.96358
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.5 0.1 3.2
+      }
+    }
+  ]
+  name "solid(38)"
+  boundingObject Box {
+    size 4.5 0.1 3.2
+  }
+}
+Solid {
+  translation 29.7079 1.53122e-12 -42.1484
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.1 0.1 3.2
+      }
+    }
+  ]
+  name "solid(37)"
+  boundingObject Box {
+    size 4.1 0.1 3.2
+  }
+}
+Solid {
+  translation -27.2764 1.53122e-12 1.90047
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 8.9 0.1 1.2
+      }
+    }
+  ]
+  name "solid(36)"
+  boundingObject Box {
+    size 8.9 0.1 1.2
+  }
+}
+Solid {
+  translation -41.7438 1.53122e-12 -26.1381
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 3.3 0.1 3.3
+      }
+    }
+  ]
+  name "solid(35)"
+  boundingObject Box {
+    size 3.3 0.1 3.3
+  }
+}
+Solid {
+  translation 12.6174 1.53122e-12 29.8445
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 15 0.1 3.4
+      }
+    }
+  ]
+  name "solid(24)"
+  boundingObject Box {
+    size 15 0.1 3.4
+  }
+}
+Solid {
+  translation 0.155006 2.84217e-14 0.0136445
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 2.1 0.1 1.9
+      }
+    }
+  ]
+  name "solid(14)"
+  boundingObject Box {
+    size 0.4 0.1 0.4
+  }
+}
+Solid {
+  translation 0.783285 -7.88702e-13 -50.1474
+  rotation 0 -1 0 -5.307179586466759e-06
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 20 2 0.09
+      }
+    }
+  ]
+  name "solid(18)"
+  boundingObject Box {
+    size 20 2 0.09
+  }
+}
+Solid {
+  translation -49.4026 4.26326e-14 0.061147
+  rotation 0 1 0 1.5708
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 20 2 0.09
+      }
+    }
+  ]
+  name "solid(19)"
+  boundingObject Box {
+    size 20 2 0.09
+  }
+}
+Solid {
+  translation -0.436032 1.77635e-13 49.5565
+  rotation 0 -1 0 -5.307179586466759e-06
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 20 2 0.09
+      }
+    }
+  ]
+  name "solid(21)"
+  boundingObject Box {
+    size 19.5 2 0.09
+  }
+}
+Solid {
+  translation 49.6901 -1.13686e-12 0.175793
+  rotation 0 1 0 1.5708
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 20 2 0.09
+      }
+    }
+  ]
+  name "solid(22)"
+  boundingObject Box {
+    size 18 2 0.09
+  }
+}
+Solid {
+  translation 4.11224 8.7219e-12 -25.261
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 15 0.1 3
+      }
+    }
+  ]
+  name "solid(25)"
+  boundingObject Box {
+    size 15 0.1 3
+  }
+}
+Solid {
+  translation -12.0064 -1.04059e-11 13.1904
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 15 0.1 3.4
+      }
+    }
+  ]
+  name "solid(26)"
+  boundingObject Box {
+    size 15 0.1 3.4
+  }
+}
+Solid {
+  translation -11.1341 1.53122e-12 -11.3473
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 15.5 0.1 2.63
+      }
+    }
+  ]
+  name "solid(27)"
+  boundingObject Box {
+    size 15.5 0.1 2.63
+  }
+}
+Mantis {
+  translation 42.5847 1 45.0965
+  controller "Mapper"
+  supervisor TRUE
+  extensionSlot [
+    HokuyoUrg04lxug01 {
+      translation 0 -0.1 0
+      rotation 1 0 0 -1.57
+    }
+    Display {
+      width 400
+      height 400
+    }
+    Compass {
+    }
+    GPS {
+    }
+  ]
+}
+Solid {
+  translation -38.9178 1.53122e-12 22.5051
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.1 0.1 0.32
+      }
+    }
+  ]
+  name "solid(42)"
+  boundingObject Box {
+    size 4.5 0.1 0.8
+  }
+}
+Solid {
+  translation -16.1598 1.53122e-12 -2.89462
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.5 0.1 0.8
+      }
+    }
+  ]
+  name "solid(20)"
+  boundingObject Box {
+    size 4.5 0.1 0.8
+  }
+}
+Solid {
+  translation 16.4241 1.53122e-12 -3.09506
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.5 0.1 0.8
+      }
+    }
+  ]
+  name "solid(41)"
+  boundingObject Box {
+    size 4.5 0.1 0.8
+  }
+}
+Solid {
+  translation 21.2916 1.55964e-12 44.6916
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 10 0.1 2.2
+      }
+    }
+  ]
+  name "solid(28)"
+  boundingObject Box {
+    size 10 0.1 2.2
+  }
+}
+Solid {
+  translation -26.8976 1.53122e-12 44.8165
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 9.3 0.1 2.2
+      }
+    }
+  ]
+  name "solid(29)"
+  boundingObject Box {
+    size 9.3 0.1 2.2
+  }
+}
+Solid {
+  translation -37.9175 1.53122e-12 31.3226
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 5 0.1 3.2
+      }
+    }
+  ]
+  name "solid(30)"
+  boundingObject Box {
+    size 5 0.1 3.2
+  }
+}
+Solid {
+  translation -39.1534 1.53122e-12 -42.3827
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.1 0.1 3.2
+      }
+    }
+  ]
+  name "solid(31)"
+  boundingObject Box {
+    size 4.1 0.1 3.2
+  }
+}
+Solid {
+  translation -4.64392 1.53122e-12 -41.4527
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 9.7 0.1 3.5
+      }
+    }
+  ]
+  name "solid(32)"
+  boundingObject Box {
+    size 9.7 0.1 3.5
+  }
+}
+Solid {
+  translation 38.349 1.53122e-12 12.8326
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 4.7 0.1 3.4
+      }
+    }
+  ]
+  name "solid(34)"
+  boundingObject Box {
+    size 4.7 0.1 3.3
+  }
+}
+Solid {
+  translation 27.5852 1.53122e-12 1.74713
+  scale 5 5 5
+  children [
+    Shape {
+      appearance PBRAppearance {
+        roughness 1
+      }
+      geometry Box {
+        size 8.9 0.1 1.2
+      }
+    }
+  ]
+  name "solid(33)"
+  boundingObject Box {
+    size 8.9 0.1 1.2
+  }
+}
