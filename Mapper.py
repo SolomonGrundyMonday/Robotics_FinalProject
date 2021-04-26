@@ -8,6 +8,7 @@ from controller import Robot, Motor, DistanceSensor, Supervisor
 import math
 import numpy as np
 from matplotlib import pyplot as plt
+from util import *
 
 # Global constants for mapping code
 ANGLE_BINS = 667
@@ -21,7 +22,8 @@ NOISE_THRESHOLD = 1.0
 FORTY_FIVE_DEGREES = math.pi/4
 NINETY_DEGREES = math.pi/2
 SINUSOIDAL_FUNCTION_MULTIPLIER = 2.0 * math.pi * 0.5
-mode = 'mapping'
+#mode = 'mapping'
+mode = 'repair'
 
 # create the Robot instance.
 robot = Supervisor()
@@ -158,5 +160,14 @@ while robot.step(timestep) != -1:
              robot.simulationSetMode(Supervisor.SIMULATION_MODE_REAL_TIME)
                 
     elif (mode == 'repair'):
-        continue
+        robot.simulationSetMode(Supervisor.SIMULATION_MODE_PAUSE)
+        out = np.load('map.npy')
+        config_space = get_config_space(out)
+        plt.imshow(config_space, cmap='gray')
+        plt.show()
+        print(get_bounds(config_space))
+        #robot.simulationSetMode(Supervisor.SIMULATION_MODE_REAL_TIME)
+        
+        
+        #continue
         # Code to spawn in and compute inverse kinematics of manipulator arm here.
