@@ -1,0 +1,195 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+  gpsReference 25 0.8 25
+}
+Viewpoint {
+  orientation 0.24329688312955478 0.9652576637016964 0.09531143333612448 5.452546096490934
+  position -3.17083288341765 1.6982351947640892 3.2561224356121725
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  translation 0.236598 0 0.0330696
+  floorSize 50 50
+  wallThickness 0.001
+  wallHeight 1e-05
+}
+Youbot {
+  controller "Repair"
+}
+DEF FLOOR_TILE Solid {
+  translation 20.0029 -2.13163e-14 -0.159242
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry DEF FLOOR_BOX Box {
+        size 10 0.1 50
+      }
+    }
+  ]
+  name "solid(1)"
+  boundingObject Box {
+    size 10 0.1 50
+  }
+}
+Solid {
+  translation -14.7341 1.42109e-14 0.0323365
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 20 0.1 50
+      }
+    }
+  ]
+  name "solid(4)"
+  boundingObject Box {
+    size 20 0.1 50
+  }
+}
+Solid {
+  translation 0.0376226 0 -12.6963
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 10 0.1 24.75
+      }
+    }
+  ]
+  name "solid(3)"
+  boundingObject Shape {
+    geometry Box {
+      size 10 0.1 24.8
+    }
+  }
+}
+Solid {
+  translation 0.0702364 -1.42109e-14 12.9751
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 10 0.1 24
+      }
+    }
+  ]
+  name "solid(2)"
+  boundingObject Box {
+    size 10 0.1 24
+  }
+}
+DEF FLOOR_TILE Solid {
+  translation 10.0964 -2.13163e-14 0.059099
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry DEF FLOOR_BOX Box {
+        size 10 0.1 50
+      }
+    }
+  ]
+  boundingObject Box {
+    size 10 0.1 50
+  }
+}
+Solid {
+  translation -0.987472 -7.88702e-13 -24.9099
+  rotation 0 -1 0 -5.307179586466759e-06
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 52 4 0.09
+      }
+    }
+  ]
+  name "solid(18)"
+  boundingObject Box {
+    size 52 4 0.09
+  }
+}
+Solid {
+  translation -24.9763 4.9738e-14 -0.387323
+  rotation 0 1 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 52 4 0.09
+      }
+    }
+  ]
+  name "solid(19)"
+  boundingObject Box {
+    size 52 4 0.09
+  }
+}
+Solid {
+  translation -0.471 1.77635e-13 24.7493
+  rotation 0 -1 0 -5.307179586466759e-06
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 52 4 0.09
+      }
+    }
+  ]
+  name "solid(21)"
+  boundingObject Box {
+    size 52 4 0.09
+  }
+}
+Solid {
+  translation 25.2583 -1.10133e-12 -1.2235
+  rotation 0 1 0 1.5708
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.5 1 1
+        roughness 1
+      }
+      geometry Box {
+        size 52 4 0.09
+      }
+    }
+  ]
+  name "solid(22)"
+  boundingObject Box {
+    size 52 4 0.09
+  }
+}
+Solid {
+  translation -0.246815 1.24345e-14 0.340755
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 9 0.1 1.4
+      }
+    }
+  ]
+  name "solid(5)"
+  boundingObject Box {
+    size 9 0.1 1.4
+  }
+}
