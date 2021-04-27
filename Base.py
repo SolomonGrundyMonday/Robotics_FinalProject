@@ -7,11 +7,17 @@ MAX_SPEED = 8
 DEMO_SPEED = 2
 OBSTACLE_THRESHOLD = 0.20
 
+motor_names = ['wheel1', 'wheel2', 'wheel3', 'wheel4']
 wheels = []
 
 actualSpeed = [0.0, 0.0, 0.0]
 targetSpeed = [0.0, 0.0, 0.0]
 maxAcceleration = [10.0, 6.0, 20.0]
+
+def base_init(robot):
+    for i in motor_names:
+        wheels.append(robot.getDevice(i))
+        
 
 def base_reset():
     for s in targetSpeed:
