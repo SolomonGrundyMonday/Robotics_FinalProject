@@ -1,11 +1,11 @@
 from controller import Robot, DistanceSensor, Motor
 import math
 
-WHEEL_RADIUS 0.063
-DISTANCE_WHEEL_TO_ROBOT_CENTRE 0.1826
-MAX_SPEED 8
-DEMO_SPEED 2
-OBSTACLE_THRESHOLD 0.20
+WHEEL_RADIUS = 0.063
+DISTANCE_WHEEL_TO_ROBOT_CENTRE = 0.1826
+MAX_SPEED = 8
+DEMO_SPEED = 2
+OBSTACLE_THRESHOLD = 0.20
 
 wheels = []
 
@@ -36,9 +36,9 @@ def base_strafe_left():
     base_set_speeds(0, DEMO_SPEED / 2.0, 0)
 
 def base_strafe_right():
-  base_set_speeds(0, -DEMO_SPEED / 2.0, 0)
+    base_set_speeds(0, -DEMO_SPEED / 2.0, 0)
 
-def base_apply_speeds(vx, vy,omega):
+def base_apply_speeds(vx, vy, omega):
     vx /= WHEEL_RADIUS
     vy /= WHEEL_RADIUS
     omega *= DISTANCE_WHEEL_TO_ROBOT_CENTRE / WHEEL_RADIUS
@@ -47,7 +47,7 @@ def base_apply_speeds(vx, vy,omega):
     wheels[1].setVelocity(-math.sqrt(0.75) * vx - 0.5 * vy - omega)
     wheels[2].setVelocity(sqrt(0.75) * vx - 0.5 * vy - omega)
 
-def base_set_speeds(vx, vy, omega)
+def base_set_speeds(vx, vy, omega):
     targetSpeed[0] = vx;
     targetSpeed[1] = vy;
     targetSpeed[2] = omega;

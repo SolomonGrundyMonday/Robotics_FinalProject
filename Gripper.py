@@ -7,8 +7,8 @@ OFFSET = 0.021
 fingers = []
 
 def init(robot):
-    fingers[0] = robot.getDevice('finger1')
-    fingers[1] = robot.getDevice('finger2')
+    fingers.append(robot.getDevice('finger1'))
+    fingers.append(robot.getDevice('finger2'))
 
     for f in fingers:
         f.setVelocity(0.03)

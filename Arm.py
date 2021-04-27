@@ -22,7 +22,7 @@ ARM_MAX_SIDE = 7
 
 arms = []
 current_height = 0
-cureent_orientation = 0
+current_orientation = 0
 
 
 
@@ -84,7 +84,7 @@ def set_height(value):
         arm[2].setPosition(-1.2)
         arm[3].setPosition(-math.pi/2)
         arm[4].setPosition(math.pi/2)
-    current_height = height;
+    current_height = value
 
 
 
@@ -113,7 +113,7 @@ def increase_height():
 
 def decrease_height():
     current_height -= 1
-    if(current_height < 0)
+    if(current_height < 0):
         current_height = 0
     set_height(current_height)
 
@@ -145,7 +145,7 @@ def get_sub_length(arm):
         l = 0.135
     elif(arm == 3):
         l = 0.081
-    elif(arm = 4):
+    elif(arm == 4):
         l = 0.105
     return l
 
