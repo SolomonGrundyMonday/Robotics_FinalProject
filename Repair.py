@@ -31,7 +31,7 @@ while (robot.step(timestep) != -1):
         if c == Keyboard.END:
             arm.arm_reset()
         elif c == Keyboard.PAGEUP:
-            gripper.gripper_grip()
+            gripper.grip()
         elif c == Keyboard.PAGEDOWN:
             gripper.release()
         elif c == Keyboard.UP + Keyboard.SHIFT:
