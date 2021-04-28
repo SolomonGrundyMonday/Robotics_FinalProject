@@ -25,25 +25,45 @@ waypoints = [(22.3, 24.7), (22.3, 26.2), (28.1, 26.4), (28.8, 25.3)]
 current_waypoint = waypoints.pop(0)
 state = 'lower arm'
 
+x_gain = 1.5
+theta_gain = 3.3
+
 while (robot.step(timestep) != -1):
 
     #arm.arm_reset()
-
+    #print(gps.getValues()[0], gps.getValues()[2])
+    count = 0
     if state == 'lower arm':
+        
         gripper.release()
         arm.pick_up()
-        if gripper.in_position() and arm.in_position():
+        #arm.set_height(5)
+        
+        #arm.inverse_kinematics(0.01, 0.1, 0.375)
+        if robot.getTime() > 3.0:
             state = 'grab'
     elif state == 'grab':
-        gripper.grip()
-        if gripper.in_position():
-            state == 'lift'
+        current_waypoint = (22.26, 24.61)
+        pose_x = gps.getValues()[0]
+        pose_y = gps.getValues()[2]
+        
+        dist_error = math.sqrt(math.pow(pose_x - current_waypoint[0], 2) + math.pow(pose_y - current_waypoint[1], 2))
+        base.base_forwards(dist_error * x_gain)
+        
+        if dist_error <= 0.01:
+            base.base_stop()
+            gripper.grip()
+            state = 'lift'
     elif state == 'lift':
-        arm.set_height(5)
-        if arm.in_position():
+        
+        #arm.increase_height()
+        
+        arm.lift()
+        if robot.getTime() > 43.8:
             state = 'drive'       
     elif state == 'drive':
     
+        #print('current waypoint: ', current_waypoint, ' coordinates: ', pose_x, ', ', pose_y)
         coord = gps.getValues()
         bearing = compass.getValues()
         pose_x = coord[0]
@@ -51,13 +71,11 @@ while (robot.step(timestep) != -1):
         pose_theta = -((math.atan2(bearing[0], bearing[2]))-1.5708)
         
         bearing_error = pose_theta - math.atan2(current_waypoint[1] - pose_y, current_waypoint[0] - pose_x)
-        dist_error = dist_err = math.sqrt(math.pow(pose_x - current_waypoint[0], 2) + math.pow(pose_y - current_waypoint[1], 2))
+        dist_error = math.sqrt(math.pow(pose_x - current_waypoint[0], 2) + math.pow(pose_y - current_waypoint[1], 2))
         
         if dist_error <= 0.1:
             current_waypoint = waypoints.pop(0)
             
-        x_gain = 1.5
-        theta_gain = 3.3
         x_prime = dist_error * x_gain
         theta_prime = bearing_error * theta_gain
         

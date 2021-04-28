@@ -22,7 +22,9 @@ class Gripper:
         print('Set velocities!')
         
     def in_position(self):
+        
         for i in self.fingers:
+            
             if i.getVelocity() != 0.0:
                 return False
         return True

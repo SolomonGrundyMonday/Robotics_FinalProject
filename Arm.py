@@ -41,11 +41,17 @@ class Arm:
         
     
     def pick_up(self):
-        self.arms[4].setPosition(math.pi/2)
-        self.arms[2].setPosition(-math.pi/2)
         self.arms[0].setPosition(2.9496)
-        self.arms[1].setPosition(math.pi/2)
+        self.arms[4].setPosition(math.pi/2)
+        self.arms[2].setPosition(0.3)
+        self.arms[3].setPosition(0.15)
+        self.arms[1].setPosition(1.13)
         
+    def lift(self):
+        #self.arms[1].setPosition(0.678)
+        self.arms[2].setPosition(0.25)
+        self.arms[3].setPosition(0.08)
+        self.arms[4].setPosition(math.pi/2)
     
     def arm_reset(self):
         self.arms[0].setPosition(0.0)
@@ -56,7 +62,8 @@ class Arm:
     
     def in_position(self):
         for i in self.arms:
-            if i.getVelocity != 0.0:
+            
+            if i.getVelocity() != 0.0:
                 return False
         return True
     
@@ -66,32 +73,32 @@ class Arm:
             self.arms[1].setPosition(-0.97)
             self.arms[2].setPosition(-1.55)
             self.arms[3].setPosition(-0.61)
-            self.arms[4].setPosition(0.0)
+            self.arms[4].setPosition(math.pi/2)
         elif value == self.ARM_FRONT_PLATE:
             self.arms[1].setPosition(-0.62)
             self.arms[2].setPosition(-0.98)
             self.arms[3].setPosition(-1.53)
-            self.arms[4].setPosition(0.0)
+            self.arms[4].setPosition(math.pi/2)
         elif value == self.ARM_FRONT_CARDBOARD_BOX:
             self.arms[1].setPosition(0.0)
             self.arms[2].setPosition(-0.77)
             self.arms[3].setPosition(-1.21)
-            self.arms[4].setPosition(0.0)
+            self.arms[4].setPosition(math.pi/2)
         elif value == self.ARM_RESET:
             self.arms[1].setPosition(1.57)
             self.arms[2].setPosition(-2.635)
             self.arms[3].setPosition(1.78)
-            self.arms[4].setPosition(0.0)
+            self.arms[4].setPosition(math.pi/2)
         elif value == self.ARM_BACK_PLATE_HIGH:
             self.arms[1].setPosition(0.678)
             self.arms[2].setPosition(0.682)
             self.arms[3].setPosition(1.74)
-            self.arms[4].setPosition(0.0)
+            self.arms[4].setPosition(math.pi/2)
         elif value == self.ARM_BACK_PLATE_LOW:
             self.arms[1].setPosition(0.92)
             self.arms[2].setPosition(0.42)
             self.arms[3].setPosition(1.78)
-            self.arms[4].setPosition(0.0)
+            self.arms[4].setPosition(math.pi/2)
         elif value == self.ARM_HANOI_PREPARE:
             self.arms[1].setPosition(-0.4)
             self.arms[2].setPosition(-1.2)
@@ -172,12 +179,20 @@ class Arm:
         x1 = math.sqrt(x**2 + z**2)
         y1 = y + self.get_sub_length(3) + self.get_sub_length(4) + self.get_sub_length(0)
     
-        a = get_sub_length(1)
-        b = get_sub_length(2)
+        a = self.get_sub_length(1)
+        b = self.get_sub_length(2)
         c = math.sqrt(x1**2 + y1**2)
     
+    
+        numerator = a**2 + c**2 - b**2
+        denominator = 2.0 * a * c
+        print('a: ', a, 'b: ', b, 'c: ', c)
+        print('x1: ', x1, 'y1: ', y1)
+        print('a**2 + c**2 - b**2: ', numerator)
+        print('2.0 * a * c: ', denominator)
+        print('x1: ', x1, ' y1: ', y1)
         alpha = -math.asin(z / x1)
-        beta = -((math.pi/2) - math.acos((a**2 + c**2 - b**2) / (2.0 * a * c)) - math.atan(y1/x1))
+        beta = -((math.pi/2) - math.acos((a * a + c * c - b * b) / (2.0 * a * c)) - math.atan(y1/x1))
         gamma = -(math.pi - math.acos((a**2 + b**2 - c**2) / (2.0 * a * b)))
         delta = -(math.pi + (beta + gamma))
         epsilon = (math.pi/2) + alpha
