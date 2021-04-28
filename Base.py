@@ -37,18 +37,16 @@ class Base:
             i.setVelocity(-self.MAX_SPEED)
     
     def base_turn_left(self):
-        for i in range(len(self.wheels)):
-            if i % 2 == 0:
-                self.wheels[i].setVelocity(-self.MAX_SPEED)
-            else:
-                self.wheels[i].setVelocity(self.MAX_SPEED)
+        self.wheels[1].setVelocity(-self.MAX_SPEED)
+        self.wheels[3].setVelocity(-self.MAX_SPEED)
+        self.wheels[0].setVelocity(self.MAX_SPEED)
+        self.wheels[2].setVelocity(self.MAX_SPEED)
                     
     def base_turn_right(self):
-        for i in range(len(self.wheels)):
-            if i % 2 == 1:
-                self.wheels[i].setVelocity(-self.MAX_SPEED)
-            else:
-                self.wheels[i].setVelocity(self.MAX_SPEED)
+        self.wheels[0].setVelocity(-self.MAX_SPEED)
+        self.wheels[2].setVelocity(-self.MAX_SPEED)
+        self.wheels[1].setVelocity(self.MAX_SPEED)
+        self.wheels[3].setVelocity(self.MAX_SPEED)
     
     def base_stop(self):
         for i in self.wheels:
