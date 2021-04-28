@@ -1,84 +1,54 @@
-from controller import Keyboard, Robot
+from controller import Keyboard, Robot, Supervisor, Field, Node
 from Arm import *
 from Gripper import *
 from Base import *
 
 import math
 
-robot = Robot()
+robot = Supervisor()
 timestep = int(robot.getBasicTimeStep())
 
+print('initializing base')
+base = Base(robot)
+print('initializing arm')
+arm = Arm(robot)
+print('initializing gripper')
+gripper = Gripper(robot)
+
+print('Initialized all components!')
 keyboard = robot.getKeyboard()
 keyboard.enable(timestep)
 
-def passive_wait(sec):
-    start_time = robot.getTime()
-    while (start_time + sec > robot.getTime()):
-        continue
-
-
-def automatic_behavior():
-    passive_wait(2.0)
-    release()
-    set_height(ARM_FRONT_CARDBOARD_BOX)
-    passive_wait(4.0)
-    grip()
-    passive_wait(1.0)
-    set_height(ARM_BACK_PLATE_LOW)
-    passive_wait(3.0)
-    release()
-    passive_wait(1.0)
-    arm_reset()
-    passive_wait(5.0)
-    grip()
-    passive_wait(1.0)
-    passive_wait(1.0)
-    release()
-    set_height(ARM_BACK_PLATE_LOW)
-    passive_wait(3.0)
-    grip()
-    passive_wait(1.0)
-    set_height(ARM_RESET)
-    passive_wait(2.0);
-    set_height(ARM_FRONT_PLATE)
-    set_orientation(ARM_RIGHT)
-    passive_wait(4.0)
-    set_height(ARM_FRONT_FLOOR)
-    passive_wait(2.0)
-    release()
-    passive_wait(1.0)
-    set_height(ARM_FRONT_PLATE)
-    passive_wait(2.0)
-    set_height(ARM_RESET)
-    passive_wait(2.0)
-    arm_reset()
-    grip()
-    passive_wait(2.0)
-
-
-
-arm_init(robot)
-init(robot)
     
-pc = 0
+print('Emtering main control loop!')
 
 while (robot.step(timestep) != -1):
 
     c = keyboard.getKey()
-    if ((c >= 0) and c != pc):
+    if ((c >= 0)):
             # if c == WB_KEYBOARD_END:
                 #do nothing
-        if c == ' ':
-            arm_reset()
-        if c == 65585:
-            gripper_grip()
-        if c == 390:
-            release()
-        if c == Keyboard.UP or Keyboard.SHIFT:
-            increase_height()
-        if c == Keyboard.DOWN or Keyboard.SHIFT:
-            decrease_height()
-        if c == Keyboard.RIGHT or Keyboard.SHIFT:
-            increase_orientation()
-        if c == Keyboard.LEFT or Keyboard.SHIFT:
-            decrease_orientation()
+        if c == Keyboard.END:
+            arm.arm_reset()
+        elif c == Keyboard.PAGEUP:
+            gripper.gripper_grip()
+        elif c == Keyboard.PAGEDOWN:
+            gripper.release()
+        elif c == Keyboard.UP + Keyboard.SHIFT:
+            arm.increase_height()
+        elif c == Keyboard.DOWN + Keyboard.SHIFT:
+            arm.decrease_height()
+        elif c == Keyboard.RIGHT + Keyboard.SHIFT:
+            arm.increase_orientation()
+        elif c == Keyboard.LEFT + Keyboard.SHIFT:
+            arm.decrease_orientation()
+        elif c == Keyboard.UP:
+            base.base_forwards()
+        elif c == Keyboard.DOWN:
+            base.base_backwards()
+        elif c == Keyboard.LEFT:
+            base.base_turn_left()
+        elif c== Keyboard.RIGHT:
+            base.base_turn_right()
+        elif c == Keyboard.HOME:
+            base.base_stop()
