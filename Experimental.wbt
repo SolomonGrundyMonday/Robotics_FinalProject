@@ -4,8 +4,8 @@ WorldInfo {
   gpsReference 25 0.8 25
 }
 Viewpoint {
-  orientation -0.15378762344248514 -0.9677533830476063 -0.19950628179539986 1.889930575250604
-  position -0.7735623918161041 3.553476385105978 -0.5347255180705264
+  orientation -0.002754752902675081 -0.9929578931493779 -0.11843577909058395 3.146821454898575
+  position -2.5146788901870734 0.7756417778803754 -1.876550393147279
 }
 TexturedBackground {
 }
@@ -18,8 +18,34 @@ RectangleArena {
   wallHeight 1e-05
 }
 Youbot {
-  translation 0 0.18 0
+  translation -2.89357 0.18 -0.398314
   controller "Repair"
+  bodySlot [
+    Compass {
+    }
+    GPS {
+    }
+  ]
+}
+Solid {
+  translation -1.77264 0.4 -0.279521
+  rotation 1 0 0 0
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 0.8 0.05 1.3
+      }
+    }
+  ]
+  name "solid(6)"
+  boundingObject Box {
+    size 0.8 0.05 1.3
+  }
+  physics Physics {
+    density 10
+  }
 }
 DEF FLOOR_TILE Solid {
   translation 20.0029 -2.13163e-14 -0.159242
@@ -69,6 +95,38 @@ Solid {
     geometry Box {
       size 10 0.1 24.8
     }
+  }
+}
+Solid {
+  translation -1.73516 -8.88178e-16 -0.844854
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 1 0.7 1
+      }
+    }
+  ]
+  name "solid(7)"
+  boundingObject Box {
+    size 1 0.7 1
+  }
+}
+Solid {
+  translation -1.71825 0 0.25458
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 1 0.7 1
+      }
+    }
+  ]
+  name "solid(8)"
+  boundingObject Box {
+    size 1 0.7 1
   }
 }
 Solid {
@@ -142,7 +200,7 @@ Solid {
 }
 Solid {
   translation -0.471 1.77635e-13 24.7493
-  rotation 0 -1 0 -5.307179586466759e-06
+  rotation 0 1 0 5.307156870259904e-06
   children [
     Shape {
       appearance PBRAppearance {
