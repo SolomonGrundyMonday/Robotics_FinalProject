@@ -20,6 +20,12 @@ class Gripper:
             f.setVelocity(0.03)
             
         print('Set velocities!')
+        
+    def in_position(self):
+        for i in self.fingers:
+            if i.getVelocity() != 0.0:
+                return False
+        return True
     
     def grip(self):
         for f in self.fingers:

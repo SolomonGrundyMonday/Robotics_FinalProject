@@ -38,7 +38,14 @@ class Arm:
         
         self.current_height = 0
         self.current_orientation = 0
+        
     
+    def pick_up(self):
+        self.arms[4].setPosition(math.pi/2)
+        self.arms[2].setPosition(-math.pi/2)
+        self.arms[0].setPosition(2.9496)
+        self.arms[1].setPosition(math.pi/2)
+        
     
     def arm_reset(self):
         self.arms[0].setPosition(0.0)
@@ -47,6 +54,11 @@ class Arm:
         self.arms[3].setPosition(1.78)
         self.arms[4].setPosition(0.0)
     
+    def in_position(self):
+        for i in self.arms:
+            if i.getVelocity != 0.0:
+                return False
+        return True
     
     def set_height(self, value):
     
@@ -150,6 +162,11 @@ class Arm:
             l = 0.105
         return l
     
+    def turn_wrist(self, rad):
+        self.arms[4].setPosition(rad)
+        
+    def get_wrist_pos(self):
+        return self.arms[4].getPositionSensor().getValue()
     
     def inverse_kinematics(self, x, y, z):
         x1 = math.sqrt(x**2 + z**2)

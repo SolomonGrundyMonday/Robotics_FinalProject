@@ -27,26 +27,39 @@ class Base:
         for s in self.targetSpeed:
             s = 0.0
     
-    def base_forwards(self):
+    def base_forwards(self, velocity):
+        if velocity > self.MAX_SPEED:
+            velocity = self.MAX_SPEED
+        
         for i in self.wheels:
-            i.setVelocity(self.MAX_SPEED)
+            i.setVelocity(velocity)
     
     
     def base_backwards(self):
         for i in self.wheels:
             i.setVelocity(-self.MAX_SPEED)
     
-    def base_turn_left(self):
-        self.wheels[1].setVelocity(-self.MAX_SPEED)
-        self.wheels[3].setVelocity(-self.MAX_SPEED)
-        self.wheels[0].setVelocity(self.MAX_SPEED)
-        self.wheels[2].setVelocity(self.MAX_SPEED)
+    def base_turn_left(self, vR, vL):
+        if(vR > self.MAX_SPEED):
+            vR = self.MAX_SPEED
+        if(vL < -self.MAX_SPEED):
+            vL = -self.MAX_SPEED
+        
+        self.wheels[1].setVelocity(vL)
+        self.wheels[3].setVelocity(vL)
+        self.wheels[0].setVelocity(vR)
+        self.wheels[2].setVelocity(vR)
                     
-    def base_turn_right(self):
-        self.wheels[0].setVelocity(-self.MAX_SPEED)
-        self.wheels[2].setVelocity(-self.MAX_SPEED)
-        self.wheels[1].setVelocity(self.MAX_SPEED)
-        self.wheels[3].setVelocity(self.MAX_SPEED)
+    def base_turn_right(self, vR, vL):
+        if(vR < -self.MAX_SPEED):
+            vR = -self.MAX_SPEED
+        if(vL > self.MAX_SPEED):
+            vL = self.MAX_SPEED
+        
+        self.wheels[0].setVelocity(vR)
+        self.wheels[2].setVelocity(vR)
+        self.wheels[1].setVelocity(vL)
+        self.wheels[3].setVelocity(vL)
     
     def base_stop(self):
         for i in self.wheels:
