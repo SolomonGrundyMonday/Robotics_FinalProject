@@ -39,7 +39,11 @@ class Arm:
         self.current_height = 0
         self.current_orientation = 0
         
-    
+    def drop(self):
+        self.arms[0].setPosition(2.85)
+        self.arms[1].setPosition(1.3)
+        # self.arms[4].setPosition(math.pi/3)
+        
     def pick_up(self):
         self.arms[0].setPosition(2.9496)
         self.arms[4].setPosition(math.pi/2)
