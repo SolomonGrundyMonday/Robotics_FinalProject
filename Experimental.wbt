@@ -4,8 +4,8 @@ WorldInfo {
   gpsReference 25 0.8 25
 }
 Viewpoint {
-  orientation -0.002754752902675081 -0.9929578931493779 -0.11843577909058395 3.146821454898575
-  position -2.5146788901870734 0.7756417778803754 -1.876550393147279
+  orientation -0.025707652886502952 -0.9901371181288905 -0.13772292433172692 2.8201288519099115
+  position -6.556369652559041 2.5435181616383744 -8.115146995398593
 }
 TexturedBackground {
 }
@@ -22,6 +22,7 @@ Youbot {
   controller "Repair"
   bodySlot [
     Compass {
+      rotation 1 0 0 1.5708
     }
     GPS {
     }
@@ -44,7 +45,7 @@ Solid {
     size 0.8 0.05 1.3
   }
   physics Physics {
-    density 10
+    density 0.2
   }
 }
 DEF FLOOR_TILE Solid {
