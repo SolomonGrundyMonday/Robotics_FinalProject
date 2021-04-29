@@ -126,8 +126,14 @@ while (robot.step(timestep) != -1):
                 base.base_stop()
                 state = 'put_down'
     elif state == 'put_down':
+        starttime = robot.getTime()
+        print ("time",starttime)
         arm.drop()
-        print ('nice')
+        # print ('nice')
+        if starttime > 163.488:
+            state = 'finally'
+    elif state == 'finally':
+        gripper.release()
         
      
     
