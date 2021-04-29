@@ -12,7 +12,9 @@ To run the robot, perform the following steps:
   4) Place the file "util.py" into the exact same directory that the new controller file is stored in.
   5) Run the simulation in Webots.
   6) NOTE:  The full sequence takes a few hours to complete, so if you do not have time to complete it, make sure to download the "map.npy" file from this repo
-     and change the value of "mode" variable to 'repair' before you run the code.  This will allow you to watch repairs being made to the damaged floor sections
+     and change the value of "mode" variable to 'repair' before you run the code (uncomment line 27 in Mapper.py).  This will allow you to watch repairs being made to   the damaged floor sections
      without waiting for the mapping sequence to complete (the mapping sequence takes a few hours to complete due to the size of the arena and speed of the robot).
      The "map.npy" file contains the output of a mapping sequence that we ran on the "final.wbt" map, thus watching the mapping routine is only necessary if you are 
      interested or have the time to spare.
+  7) In order for the Repair routine to run properly you must follow the same steps as above for the Experimental.wbt world file and Repair.py python controller.
+  8) You must ensure that the Arm.py, Base.py and Gripper.py files are in the exact same directory as the Repair.py file or the implementation will throw an error and exit with status 1.
