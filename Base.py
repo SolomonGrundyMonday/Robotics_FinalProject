@@ -49,8 +49,8 @@ class Base:
         self.wheels[2].setVelocity(-velocity)
                     
     def base_turn_right(self, velocity):
-        if(velocity < -self.MAX_SPEED):
-            velocity = -self.MAX_SPEED
+        if(velocity > self.MAX_SPEED):
+            velocity = self.MAX_SPEED
         
         self.wheels[0].setVelocity(velocity)
         self.wheels[2].setVelocity(velocity)
