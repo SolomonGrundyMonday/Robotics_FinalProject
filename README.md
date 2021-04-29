@@ -16,5 +16,5 @@ To run the robot, perform the following steps:
      without waiting for the mapping sequence to complete (the mapping sequence takes a few hours to complete due to the size of the arena and speed of the robot).
      The "map.npy" file contains the output of a mapping sequence that we ran on the "final.wbt" map, thus watching the mapping routine is only necessary if you are 
      interested or have the time to spare.
-  7) In order for the Repair routine to run properly you must follow the same steps as above for the Experimental.wbt world file and Repair.py python controller.
+  7) In order for the Repair routine to run properly you must follow the same steps as above for the Experimental.wbt world file and Repair.py python controller.  Additionally, the Experimental.wbt world file must follow the following file structure relative to the Mapper.py routine in order to load the repair world from the mapping world: "../../Robotics_FinalProject-main/Experimental.wbt".
   8) You must ensure that the Arm.py, Base.py and Gripper.py files are in the exact same directory as the Repair.py file or the implementation will throw an error and exit with status 1.
