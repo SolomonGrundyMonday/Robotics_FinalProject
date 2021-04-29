@@ -10,6 +10,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from util import *
 
+
 # Global constants for mapping code
 ANGLE_BINS = 667
 MAX_LIDAR_ANGLE = math.radians(240)
@@ -17,13 +18,13 @@ LIDAR_SENSOR_MAX_RANGE = 5.5
 MAP_HEIGHT = 400
 MAP_WIDTH = 400
 DAMAGE_THRESHOLD = .95
-INCREMENT_CMAP = 0.0005
+INCREMENT_CMAP = 0.005
 NOISE_THRESHOLD = 1.0
 FORTY_FIVE_DEGREES = math.pi/4
 NINETY_DEGREES = math.pi/2
 SINUSOIDAL_FUNCTION_MULTIPLIER = 2.0 * math.pi * 0.5
-#mode = 'mapping'
-mode = 'repair'
+mode = 'mapping'
+#mode = 'repair'
 
 # create the Robot instance.
 robot = Supervisor()
@@ -91,9 +92,7 @@ while robot.step(timestep) != -1:
         pose_theta = -((math.atan2(n[0], n[2])) - (NINETY_DEGREES))
         bearing_err = pose_theta - goal_theta
     
-    
-        #print("bearing error: ", bearing_err, "goal theta: ", goal_theta)
-        #print("(x, y): (", pose_x, ", ", pose_y, ")")   
+      
         if abs(bearing_err) > 0.2 and pose_y < 7 and goal_theta != 0: #south           
             for i in range(0, 10):#all the right legs
                 motors[i].setPosition(ampVector[i] * math.sin(SINUSOIDAL_FUNCTION_MULTIPLIER * time + phaseVector[i]) + offsetVector[i])
@@ -107,9 +106,9 @@ while robot.step(timestep) != -1:
         else:#go straight forward
     
             if pose_y < 7:
-                goal_theta = 0
-            elif pose_y > 93:
                 goal_theta = math.pi
+            elif pose_y > 93:
+                goal_theta = 0
             for i in range(0, 18):  
                 motors[i].setPosition(ampVector[i] * math.sin(SINUSOIDAL_FUNCTION_MULTIPLIER * time + phaseVector[i]) + offsetVector[i])
       
@@ -141,33 +140,30 @@ while robot.step(timestep) != -1:
                     if(map[pixel_x][pixel_y] > NOISE_THRESHOLD):
                         map[pixel_x][pixel_y] = NOISE_THRESHOLD
                     
-                    #display.setColor(0xFF0000)
-                    #display.drawPixel(pixel_x, pixel_y)
-                    # Print sensor data above threshold after filtering noise to the display
+ 
                     g = int(map[pixel_x][pixel_y]*255)
                     g = int((g*256**2+g*256+g))
                     display.setColor(g)
                     display.drawPixel(pixel_x, pixel_y)
-                
+         
+        # If we are at the end of the mapping routine, save the map file as a .npy file, display it and switch to repair state      
         if np.isclose(pose_x, 5, 0.4) and np.isclose(pose_y, 5, 0.4):
              robot.simulationSetMode(Supervisor.SIMULATION_MODE_PAUSE)
              np.save('map', map)
-             # Do stuff here to compute the c-spoce map and spawn in the manipulator arm
-             # and repair equipment to the appropriate locations
+             
              plt.imshow(map, cmap='gray')
              plt.show()
              mode = 'repair'
              robot.simulationSetMode(Supervisor.SIMULATION_MODE_REAL_TIME)
-                
+    # Repair state generates a config space map from npy file and loads the repair world            
     elif (mode == 'repair'):
         robot.simulationSetMode(Supervisor.SIMULATION_MODE_PAUSE)
         out = np.load('map.npy')
         config_space = get_config_space(out)
         plt.imshow(config_space, cmap='gray')
         plt.show()
-        print(get_bounds(config_space))
-        #robot.simulationSetMode(Supervisor.SIMULATION_MODE_REAL_TIME)
+        
+        robot.simulationSetMode(Supervisor.SIMULATION_MODE_REAL_TIME)
+        robot.worldLoad('../../Robotics_FinalProject-main/Experimental.wbt')
         
         
-        #continue
-        # Code to spawn in and compute inverse kinematics of manipulator arm here.
